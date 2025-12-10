@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black Hole</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Left Menu Panel -->
+        <div class="left-panel">
+            <div class="panel-header">
+                <h1>Menu</h1>
+            </div>
+
+            <div class="controls">
+                <div class="control-section">
+                    <h3>Cargar Imágenes</h3>
+                    <div class="folder-input-container">
+                        <button id="selectFolderBtn" class="btn btn-primary">
+                            <span class="btn-icon">📁</span>
+                            Seleccionar Carpeta
+                        </button>
+                        <div id="selectedFolder" class="selected-folder-text hidden"></div>
+
+                        <div class="input-group" style="margin-top: 1rem;">
+                            <label for="embeddingModel" class="input-label">Modelo de Embeddings:</label>
+                            <select id="embeddingModel" class="form-select">
+                                <option value="resnet">ResNet (Microsoft)</option>
+                                <option value="clip">CLIP (OpenAI)</option>
+                                <option value="siglip">SigLIP (Google)</option>
+
+                            </select>
+                        </div>
+
+                        <button id="loadImagesBtn" class="btn btn-success hidden" style="margin-top: 0.5rem;">
+                            <span class="btn-icon">▶️</span>
+                            Procesar Imágenes
+                        </button>
+                    </div>
+
+                    <div id="progressContainer" class="progress-container hidden">
+                        <div class="progress-label">Procesando imágenes...</div>
+                        <div class="progress-bar">
+                            <div id="progressBar" class="progress-fill"></div>
+                        </div>
+                        <div id="progressText" class="progress-text">0%</div>
+                    </div>
+                </div>
+
+                <div class="control-section">
+                    <h3>Herramientas de Polígono</h3>
+                    <div class="tool-buttons">
+                        <button id="navigateBtn" class="btn btn-tool active" data-mode="navigate">
+                            <span class="btn-icon">🖱️</span>
+                            Navegar
+                        </button>
+                        <button id="drawPolygonBtn" class="btn btn-tool" data-mode="draw">
+                            <span class="btn-icon">✏️</span>
+                            Dibujar
+                        </button>
+                        <button id="selectPolygonBtn" class="btn btn-tool" data-mode="select">
+                            <span class="btn-icon">👆</span>
+                            Seleccionar
+                        </button>
+                        <button id="movePolygonBtn" class="btn btn-tool" data-mode="move">
+                            <span class="btn-icon">✋</span>
+                            Mover
+                        </button>
+                        <button id="editPolygonBtn" class="btn btn-tool" data-mode="edit">
+                            <span class="btn-icon">✂️</span>
+                            Editar
+                        </button>
+                    </div>
+
+                    <div id="activePolygonInfo" class="polygon-info hidden">
+                        <div class="info-label">Polígono Activo:</div>
+                        <input type="text" id="polygonNameInput" placeholder="Nombre del polígono..."
+                            class="polygon-name-input">
+                        <button id="deletePolygonBtn" class="btn btn-danger">Eliminar</button>
+                    </div>
+                </div>
+
+                <div class="control-section">
+                    <h3>Exportar</h3>
+                    <button id="exportLabelsBtn" class="btn btn-success" disabled>
+                        <span class="btn-icon">💾</span>
+                        Exportar Etiquetas
+                    </button>
+                    <div id="statsInfo" class="stats-info"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Center Visualization Panel -->
+        <div class="center-panel">
+            <div class="visualization-header">
+                <h2>Black Hole</h2>
+                <div class="visualization-controls">
+                    <button id="resetZoomBtn" class="btn btn-small">↻ Reset Zoom</button>
+                    <div class="mode-indicator">
+                        <span id="currentMode">Modo: Navegación</span>
+                    </div>
+                </div>
+            </div>
+            <div id="visualization" class="visualization-container"></div>
+        </div>
+
+        <!-- Right Image Panel -->
+        <div id="rightPanel" class="right-panel hidden">
+            <div class="panel-close">
+                <button id="closePanelBtn" class="close-btn">×</button>
+            </div>
+            <div class="image-preview-container">
+                <div id="imagePreview" class="image-preview">
+                    <div class="image-placeholder">Selecciona un punto para ver la imagen</div>
+                </div>
+                <div id="imageInfo" class="image-info">
+                    <div class="info-item">
+                        <strong>Nombre:</strong>
+                        <span id="imageName">-</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Etiqueta:</strong>
+                        <span id="imageLabel" class="label-badge">Sin etiqueta</span>
+                    </div>
+                </div>
+
+                <div id="neighborsContainer" class="neighbors-container hidden">
+                    <h3>Vecinos Cercanos (10)</h3>
+                    <div id="neighborsList" class="neighbors-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="imageModal" class="modal hidden">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="expandedImage">
+        <div id="caption"></div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+    <script src="/static/js/polygons.js"></script>
+    <script src="/static/js/visualization.js"></script>
+</body>
+
+</html>
