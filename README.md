@@ -6,7 +6,7 @@
 
 
 
-### Las imagenes son embedidas por una red neuronal tipo ResNet y posteriormente se comprime el vector extraido a un espacio 2D por el método seleccionado.
+### Las imagenes son embedidas por una red neuronal tipo ResNet y posteriormente se comprime el vector extraido a un espacio 2D (se puede seleccionar el método de compresión).
 
 
 
