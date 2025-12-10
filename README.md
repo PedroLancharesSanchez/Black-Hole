@@ -21,6 +21,9 @@
 
 ### Posteriormente, podemos exportar estas etiquetas en formato csv. De este modo se logra clasificar grandes cantidades de imagenes en muy poco tiempo.
 
+Fdo: El Planchas 
+
+
 
 
 
